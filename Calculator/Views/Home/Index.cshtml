@@ -1,18 +1,20 @@
-﻿@model Operation  
+﻿@model OperationViewModel  
 <form asp-controller="Home" asp-action="Index" method="post" >  
     <div class="form-group">  
         <div class="row">  
             <label asp-for="Num1" class="col-lg-2"></label>  
             <input type="number" asp-for="Num1" class="col-lg-2" />  
+            <span asp-validation-for="Num1" class="text-danger"></span>
         </div>  
         <div class="row">  
             <label asp-for="Num2" class="col-lg-2"></label>  
             <input type="number" asp-for="Num2" class="col-lg-2" />  
+            <span asp-validation-for="Num2" class="text-danger"></span>
         </div>  
         <div class="row">  
             <label asp-for="OperationType" class="col-lg-2"></label>  
             <select asp-for="OperationType" class="col-lg-2" asp-items="Html.GetEnumSelectList<OperationType>()">  
-                <option selected="selected" value="">Select</option>  
+                <option selected="selected" value="">@OperationType.Addition</option>  
             </select>  
         </div>  
         <div class="row">  

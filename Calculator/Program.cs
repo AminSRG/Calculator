@@ -1,4 +1,5 @@
 using Application;
+using Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +8,9 @@ builder.Services.AddControllersWithViews();
 
 // Add Application Layer Dependency!
 builder.Services.AddApplicationService();
+// Add Persistence Layer Dependency!
+builder.Services.AddPersistenceService();
+
 
 var app = builder.Build();
 // Configure the HTTP request pipeline.

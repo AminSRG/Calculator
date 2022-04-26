@@ -1,5 +1,8 @@
-﻿using Calculator.Models;
+﻿using AutoMapper;
+using Calculator.Models;
+using Domain.Model;
 using Microsoft.AspNetCore.Mvc;
+using Persistence.ViewModel;
 using System.Diagnostics;
 
 namespace Calculator.Controllers
@@ -7,7 +10,7 @@ namespace Calculator.Controllers
     public class HomeController : Calculator.Infrastructure.Controller
     {
         public HomeController(ILogger<HomeController> logger,
-            Application.IServices.ICalculatorRepository calculatorRepository) : base(logger, calculatorRepository)
+            Application.IServices.ICalculatorRepository calculatorRepository, IMapper mapper) : base(logger, mapper, calculatorRepository)
         {
         }
 
@@ -18,8 +21,9 @@ namespace Calculator.Controllers
         }
 
         [HttpPost]
-        public IActionResult Index(Domain.Model.Operation operation)
+        public IActionResult Index(OperationViewModel operationViewModel)
         {
+            var operation = Mapper.Map<Operation>(operationViewModel);
             switch (operation.OperationType)
             {
                 case Domain.Enum.OperationType.Addition: 
@@ -35,7 +39,8 @@ namespace Calculator.Controllers
                     operation.Result = CalculatorRepository.Subtraction(operation.Num1, operation.Num2);
                     break;
             }
-            return View(model: operation);
+            var operationResult = Mapper.Map<OperationViewModel>(operation);
+            return View(model: operationResult);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
